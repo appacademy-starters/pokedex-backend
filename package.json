@@ -14,7 +14,7 @@
     "migration:generate": "sequelize-cli migration:generate",
     "model:generate": "sequelize-cli model:generate",
     "seed:generate": "sequelize-cli seed:generate",
-    "start": "node ./bin/www"
+    "start": "dotenv ./bin/www"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
