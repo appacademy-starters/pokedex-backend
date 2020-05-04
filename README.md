@@ -102,6 +102,14 @@ Successful response:
 }
 ```
 
+## Images
+
+Some of the API results have image URLs associated with them. You can get them
+from this service. For example, if the service is hosted at
+`http://localhost:8000`, then `http://localhost:8000/images/pokemon_snaps/5.svg`
+will show the image for the Pokemon with the image URL
+`/images/pokemon_snaps/5.svg`.
+
 ## The Pokemon API
 
 This is all about listing and creating Pokemon.

@@ -36,7 +36,7 @@ async function create(details, owner) {
 
 async function list() {
   return await Pokemon.findAll({
-    attributes: [ 'imageUrl', 'name', 'updatedAt' ],
+    attributes: [ 'imageUrl', 'name', 'updatedAt', 'id' ],
   });
 }
 
@@ -48,6 +48,7 @@ async function one(id) {
   return {
     attack: pokemon.attack,
     defense: pokemon.defense,
+    id: pokemon.id,
     imageUrl: pokemon.imageUrl,
     name: pokemon.name,
     type: pokemon.type,
