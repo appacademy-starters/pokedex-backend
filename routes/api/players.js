@@ -34,6 +34,7 @@ router.post('/', email, password, name, asyncHandler(async function (req, res, n
   const { jti, token } = generateToken(player);
   player.tokenId = jti;
   await player.save();
+  res.cookie("token", token);
   res.json({ token, player: player.toSafeObject() });
 }));
 

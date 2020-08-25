@@ -36,12 +36,14 @@ router.put('/', [email, password], asyncHandler(async (req, res, next) => {
   const { jti, token } = generateToken(player);
   player.tokenId = jti;
   await player.save();
+  res.cookie('token', token);
   res.json({ token, player: player.toSafeObject() });
 }));
 
 router.delete('/', [authenticated], asyncHandler(async (req, res) => {
   req.player.tokenId = null;
   await req.player.save();
+  res.clearCookie('token');
   res.json({ message: 'success' });
 }));
 

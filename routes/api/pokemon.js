@@ -20,6 +20,10 @@ router.get('/', authenticated, asyncHandler(async function(_req, res) {
   res.json(pokemon);
 }));
 
+const errorFormatter = ({ msg, param }) => {
+  return `${param}: ${msg}`;
+};
+
 router.post('/', [
   ...authenticated,
   attack,
@@ -29,13 +33,13 @@ router.post('/', [
   type,
   moves,
 ], asyncHandler(async function (req, res, next) {
-  const errors = validationResult(req);
+  const errors = validationResult(req).formatWith(errorFormatter);
   if (!errors.isEmpty()) {
     return next({ status: 422, errors: errors.array() });
   }
 
   const id = await PokemonRepository.create(req.body, req.player);
-  return res.redirect(`${req.baseUrl}/${id}`);
+  return res.json({ id });
 }));
 
 router.get('/types', authenticated, asyncHandler(async function (_req, res) {
