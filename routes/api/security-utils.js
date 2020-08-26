@@ -1,4 +1,3 @@
-const bearerToken = require('express-bearer-token');
 const jwt = require('jsonwebtoken');
 const uuid = require('uuid').v4;
 
@@ -6,9 +5,7 @@ const { jwtConfig: { secret, expiresIn } } = require('../../config');
 const PlayerRepository = require('../../db/player-repository');
 
 function generateToken(player) {
-  const data = {
-    name: player.name,
-  };
+  const data = player.toSafeObject();
   const jwtid = uuid();
 
   return {
@@ -18,7 +15,7 @@ function generateToken(player) {
 }
 
 function restorePlayer(req, res, next) {
-  const { token } = req;
+  const { token } = req.cookies;
 
   if (!token) {
     return next({ status: 401, message: 'no token' });
@@ -26,7 +23,8 @@ function restorePlayer(req, res, next) {
 
   return jwt.verify(token, secret, null, async (err, payload) => {
     if (err) {
-      err.status = 403;
+      res.clearCookie('token');
+      err.status = 401;
       return next(err);
     }
 
@@ -35,17 +33,19 @@ function restorePlayer(req, res, next) {
     try {
       req.player = await PlayerRepository.findByTokenId(tokenId);
     } catch (e) {
-      return next(e);
+      res.clearCookie("token");
+      return next({ status: 401, message: "user not found" });
     }
 
     if (!req.player.isValid()) {
-      return next({ status: 404, message: 'session not found' });
+      res.clearCookie("token");
+      return next({ status: 401, message: 'session not found' });
     }
 
     next();
   });
 }
 
-const authenticated = [bearerToken(), restorePlayer];
+const authenticated = [restorePlayer];
 
 module.exports = { generateToken, authenticated };
