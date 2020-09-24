@@ -8,6 +8,8 @@ This is the backend for the Pokedex exercises.
 2. Install dependencies
 3. Create a **.env** file based on the `.env.example` with proper settings for 
    your local environment
+   * Change `DB_PASSWORD` to a strong password
+   * Change `JWT_SECRET` to strong JWT secret (random bytes)
 4. Create a database user with the same name and password as found in your
    **.env** file with CREATEDB privileges
 5. Run
