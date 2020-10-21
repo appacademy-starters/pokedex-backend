@@ -6,17 +6,15 @@ This is the backend for the Pokedex exercises.
 
 1. Clone this repository
 2. Install dependencies
-3. Create a **.env** file based on the `.env.example` with proper settings for 
-   your local environment
-   * Change `DB_PASSWORD` to a strong password
-   * Change `JWT_SECRET` to strong JWT secret (random bytes)
+3. Create a **.env** file based on the example with proper settings for your
+   local environment
 4. Create a database user with the same name and password as found in your
    **.env** file with CREATEDB privileges
 5. Run
    * `npm run db:create`
    * `npm run db:migrate`
    * `npm run db:seed:all`
-   * `npm start`
+   * `npm run dev`
 
 ## The security API
 
@@ -47,7 +45,7 @@ Successful response:
 
 ```json
 {
-  "token": "the jwt token",
+  "token": "the token to use in your follow-up requests",
   "player": {
     "createdAt": "2019-05-01T08:33:40.799Z",
     "email": "yusuke@example.com",
@@ -74,7 +72,7 @@ Successful response:
 
 ```json
 {
-  "token": "the jwt token",
+  "token": "the token to use in your follow-up requests",
   "player": {
     "createdAt": "2019-05-01T08:33:40.799Z",
     "email": "marco@example.com",
@@ -87,7 +85,14 @@ Successful response:
 
 ### Logout: DELETE /api/session
 
-You need to be logged in with a valid `token` cookie.
+You need to include the token received from logging in or signing up in this
+call as a _Bearer_ token for the _Authorization_ header. Set that on the
+header of the `fetch` call for this endpoint.
+
+```js
+// Example code snippet
+fetch(url, { headers: { Authorization: `Bearer ${token}` }})
+```
 
 Successful response:
 
@@ -111,7 +116,14 @@ This is all about listing and creating Pokemon.
 
 ### List Pokemon types: GET /api/pokemon/types
 
-You need to be logged in with a valid `token` cookie.
+You need to include the token received from logging in or signing up in this
+call as a _Bearer_ token for the _Authorization_ header. Set that on the
+header of the `fetch` call for this endpoint.
+
+```js
+// Example code snippet
+fetch(url, { headers: { Authorization: `Bearer ${token}` }})
+```
 
 Successful response:
 
@@ -138,7 +150,14 @@ Successful response:
 
 ### List Pokemon: GET /api/pokemon
 
-You need to be logged in with a valid `token` cookie.
+You need to include the token received from logging in or signing up in this
+call as a _Bearer_ token for the _Authorization_ header. Set that on the
+header of the `fetch` call for this endpoint.
+
+```js
+// Example code snippet
+fetch(url, { headers: { Authorization: `Bearer ${token}` }})
+```
 
 Successful response looks like this with more entries:
 
@@ -154,7 +173,14 @@ Successful response looks like this with more entries:
 
 ### Pokemon details: GET /api/pokemon/:id
 
-You need to be logged in with a valid `token` cookie.
+You need to include the token received from logging in or signing up in this
+call as a _Bearer_ token for the _Authorization_ header. Set that on the
+header of the `fetch` call for this endpoint.
+
+```js
+// Example code snippet
+fetch(url, { headers: { Authorization: `Bearer ${token}` }})
+```
 
 Successful response looks like this for the given id:
 
@@ -179,7 +205,14 @@ Successful response looks like this for the given id:
 
 ### Create a new Pokemon: POST /api/pokemon
 
-You need to be logged in with a valid `token` cookie.
+You need to include the token received from logging in or signing up in this
+call as a _Bearer_ token for the _Authorization_ header. Set that on the
+header of the `fetch` call for this endpoint.
+
+```js
+// Example code snippet
+fetch(url, { headers: { Authorization: `Bearer ${token}` }})
+```
 
 The payload that you must send looks like this.
 

@@ -5,10 +5,8 @@
  */
 
 const app = require('../app');
-// debug: make sure to set env variable of DEBUG= to "starter:server" or "*"
 const debug = require('debug')('starter:server');
 const http = require('http');
-const db = require('../db/models');
 
 /**
  * Get port from environment and store in Express.
@@ -26,17 +24,10 @@ const server = http.createServer(app);
 /**
  * Listen on provided port, on all network interfaces.
  */
+
+server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
-
-db.sequelize.authenticate()
-  .then(() => {
-    debug("Successfully connected to database.");
-    server.listen(port);
-  })
-  .catch(() => {
-    debug('Unable to connect to database.');
-  })
 
 /**
  * Normalize a port into a number, string, or false.
@@ -74,11 +65,11 @@ function onError(error) {
   // handle specific listen errors with friendly messages
   switch (error.code) {
     case 'EACCES':
-      debug(bind + ' requires elevated privileges');
+      console.error(bind + ' requires elevated privileges');
       process.exit(1);
       break;
     case 'EADDRINUSE':
-      debug(bind + ' is already in use');
+      console.error(bind + ' is already in use');
       process.exit(1);
       break;
     default:
@@ -93,7 +84,7 @@ function onError(error) {
 function onListening() {
   const addr = server.address();
   const bind = typeof addr === 'string'
-  ? 'pipe ' + addr
-  : 'port ' + addr.port;
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
