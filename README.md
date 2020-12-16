@@ -14,7 +14,7 @@ This is the backend for the Pokedex exercises.
    * `npm run db:create`
    * `npm run db:migrate`
    * `npm run db:seed:all`
-   * `npm run dev`
+   * `npm start`
 
 ## The security API
 

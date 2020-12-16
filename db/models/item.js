@@ -1,19 +1,28 @@
 'use strict';
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
-  const Item = sequelize.define('Item', {
+  class Item extends Model {
+    static associate(models) {
+      Item.belongsTo(models.Pokemon, {
+        foreignKey: "pokemonId",
+        as: "pokemon",
+      });
+    }
+  };
+  Item.init({
     happiness: DataTypes.INTEGER,
     imageUrl: {
       allowNull: false,
       type: DataTypes.STRING,
-      validates: {
-        isUrl: true,
+      validate: {
         len: [0, 255],
       },
     },
     name: {
       allowNull: false,
       type: DataTypes.STRING,
-      validates: {
+      validate: {
         len: [0, 255]
       },
     },
@@ -24,10 +33,18 @@ module.exports = (sequelize, DataTypes) => {
     pokemonId: {
       allowNull: false,
       type: DataTypes.INTEGER,
-    }
-  }, {});
-  Item.associate = function(models) {
-    Item.belongsTo(models.Pokemon, { foreignKey: 'pokemonId', as: 'pokemon' });
-  };
+    },
+  }, {
+    sequelize,
+    modelName: 'Item',
+    defaultScope: {
+      attributes: {
+        exclude: [
+          "createdAt",
+          "updatedAt",
+        ]
+      }
+    },
+  });
   return Item;
 };

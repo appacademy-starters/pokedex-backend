@@ -1,16 +1,10 @@
 'use strict';
 
-function r(o) {
-  o.playerId = Math.round(Math.random()) + 2;
-  o.createdAt = new Date();
-  o.updatedAt = new Date();
-  return o;
-}
-
 module.exports = {
-  up: (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('Pokemons', [
-      r({
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.bulkInsert('Pokemons', [
+      {
+        no: 1,
         imageUrl: '/images/pokemon_snaps/1.svg',
         name: 'Bulbasaur',
         attack: 49,
@@ -20,8 +14,12 @@ module.exports = {
           'tackle',
           'vine whip'
         ],
-      }),
-      r({
+        captured: true
+      },
+    ]);
+    await queryInterface.bulkInsert('Pokemons', [
+      {
+        no: 2,
         imageUrl: '/images/pokemon_snaps/2.svg',
         name: 'Ivysaur',
         attack: 62,
@@ -32,8 +30,9 @@ module.exports = {
           'vine whip',
           'razor leaf'
         ],
-      }),
-      r({
+      },
+      {
+        no: 3,
         imageUrl: '/images/pokemon_snaps/3.svg',
         name: 'Venusaur',
         attack: 82,
@@ -44,8 +43,9 @@ module.exports = {
           'vine whip',
           'razor leaf'
         ],
-      }),
-      r({
+      },
+      {
+        no: 4,
         imageUrl: '/images/pokemon_snaps/4.svg',
         name: 'Charmander',
         attack: 52,
@@ -56,8 +56,9 @@ module.exports = {
           'ember',
           'metal claw'
         ],
-      }),
-      r({
+      },
+      {
+        no: 5,
         imageUrl: '/images/pokemon_snaps/5.svg',
         name: 'Charmeleon',
         attack: 64,
@@ -69,8 +70,9 @@ module.exports = {
           'metal claw',
           'flamethrower'
         ],
-      }),
-      r({
+      },
+      {
+        no: 6,
         imageUrl: '/images/pokemon_snaps/6.svg',
         name: 'Charizard',
         attack: 84,
@@ -82,8 +84,9 @@ module.exports = {
           'slash',
           'metal claw'
         ],
-      }),
-      r({
+      },
+      {
+        no: 7,
         imageUrl: '/images/pokemon_snaps/7.svg',
         name: 'Squirtle',
         attack: 48,
@@ -94,8 +97,9 @@ module.exports = {
           'bubble',
           'water gun'
         ],
-      }),
-      r({
+      },
+      {
+        no: 8,
         imageUrl: '/images/pokemon_snaps/8.svg',
         name: 'Wartortle',
         attack: 63,
@@ -107,8 +111,9 @@ module.exports = {
           'water gun',
           'bite'
         ],
-      }),
-      r({
+      },
+      {
+        no: 9,
         imageUrl: '/images/pokemon_snaps/9.svg',
         name: 'Blastoise',
         attack: 83,
@@ -120,8 +125,9 @@ module.exports = {
           'water gun',
           'bite'
         ],
-      }),
-      r({
+      },
+      {
+        no: 10,
         imageUrl: '/images/pokemon_snaps/10.svg',
         name: 'Caterpie',
         attack: 30,
@@ -130,8 +136,9 @@ module.exports = {
         moves: [
           'tackle'
         ],
-      }),
-      r({
+      },
+      {
+        no: 12,
         imageUrl: '/images/pokemon_snaps/12.svg',
         name: 'Butterfree',
         attack: 45,
@@ -143,8 +150,9 @@ module.exports = {
           'psybeam',
           'silver wind'
         ],
-      }),
-      r({
+      },
+      {
+        no: 13,
         imageUrl: '/images/pokemon_snaps/13.svg',
         name: 'Weedle',
         attack: 35,
@@ -153,8 +161,9 @@ module.exports = {
         moves: [
           'poison sting'
         ],
-      }),
-      r({
+      },
+      {
+        no: 16,
         imageUrl: '/images/pokemon_snaps/16.svg',
         name: 'Pidgey',
         attack: 45,
@@ -164,8 +173,9 @@ module.exports = {
           'tackle',
           'gust'
         ],
-      }),
-      r({
+      },
+      {
+        no: 17,
         imageUrl: '/images/pokemon_snaps/17.svg',
         name: 'Pidgeotto',
         attack: 60,
@@ -176,8 +186,9 @@ module.exports = {
           'gust',
           'wing attack'
         ],
-      }),
-      r({
+      },
+      {
+        no: 18,
         imageUrl: '/images/pokemon_snaps/18.svg',
         name: 'Pidgeot',
         attack: 80,
@@ -188,8 +199,9 @@ module.exports = {
           'gust',
           'wing attack'
         ],
-      }),
-      r({
+      },
+      {
+        no: 19,
         imageUrl: '/images/pokemon_snaps/19.svg',
         name: 'Rattata',
         attack: 56,
@@ -199,8 +211,9 @@ module.exports = {
           'tackle',
           'hyper fang'
         ],
-      }),
-      r({
+      },
+      {
+        no: 20,
         imageUrl: '/images/pokemon_snaps/20.svg',
         name: 'Raticate',
         attack: 81,
@@ -210,8 +223,9 @@ module.exports = {
           'tackle',
           'hyper fang'
         ],
-      }),
-      r({
+      },
+      {
+        no: 21,
         imageUrl: '/images/pokemon_snaps/21.svg',
         name: 'Spearow',
         attack: 60,
@@ -220,8 +234,9 @@ module.exports = {
         moves: [
           'peck'
         ],
-      }),
-      r({
+      },
+      {
+        no: 22,
         imageUrl: '/images/pokemon_snaps/22.svg',
         name: 'Fearow',
         attack: 90,
@@ -231,8 +246,9 @@ module.exports = {
           'peck',
           'drill peck'
         ],
-      }),
-      r({
+      },
+      {
+        no: 23,
         imageUrl: '/images/pokemon_snaps/23.svg',
         name: 'Ekans',
         attack: 60,
@@ -242,8 +258,9 @@ module.exports = {
           'poison sting',
           'bite'
         ],
-      }),
-      r({
+      },
+      {
+        no: 24,
         imageUrl: '/images/pokemon_snaps/24.svg',
         name: 'Arbok',
         attack: 85,
@@ -254,8 +271,9 @@ module.exports = {
           'bite',
           'acid'
         ],
-      }),
-      r({
+      },
+      {
+        no: 25,
         imageUrl: '/images/pokemon_snaps/25.svg',
         name: 'Pikachu',
         attack: 55,
@@ -266,8 +284,9 @@ module.exports = {
           'electro ball',
           'feint'
         ]
-      }),
-      r({
+      },
+      {
+        no: 26,
         imageUrl: '/images/pokemon_snaps/26.svg',
         name: 'Raichu',
         attack: 90,
@@ -277,8 +296,9 @@ module.exports = {
           'thundershock',
           'thunderbolt'
         ],
-      }),
-      r({
+      },
+      {
+        no: 27,
         imageUrl: '/images/pokemon_snaps/27.svg',
         name: 'Sandshrew',
         attack: 75,
@@ -288,8 +308,9 @@ module.exports = {
           'scratch',
           'poison sting'
         ],
-      }),
-      r({
+      },
+      {
+        no: 28,
         imageUrl: '/images/pokemon_snaps/28.svg',
         name: 'Sandslash',
         attack: 100,
@@ -301,8 +322,9 @@ module.exports = {
           'slash',
           'swift'
         ],
-      }),
-      r({
+      },
+      {
+        no: 29,
         imageUrl: '/images/pokemon_snaps/29.svg',
         name: 'Nidorana',
         attack: 47,
@@ -311,8 +333,9 @@ module.exports = {
         moves: [
           'scratch'
         ],
-      }),
-      r({
+      },
+      {
+        no: 31,
         imageUrl: '/images/pokemon_snaps/31.svg',
         name: 'Nidoqueen',
         attack: 82,
@@ -324,8 +347,9 @@ module.exports = {
           'body slam',
           'superpower'
         ],
-      }),
-      r({
+      },
+      {
+        no: 32,
         imageUrl: '/images/pokemon_snaps/32.svg',
         name: 'Nidoran',
         attack: 57,
@@ -334,8 +358,9 @@ module.exports = {
         moves: [
           'peck'
         ],
-      }),
-      r({
+      },
+      {
+        no: 34,
         imageUrl: '/images/pokemon_snaps/34.svg',
         name: 'Nidoking',
         attack: 92,
@@ -346,8 +371,9 @@ module.exports = {
           'poison sting',
           'megahorn'
         ],
-      }),
-      r({
+      },
+      {
+        no: 38,
         imageUrl: '/images/pokemon_snaps/38.svg',
         name: 'Ninetales',
         attack: 76,
@@ -356,8 +382,9 @@ module.exports = {
         moves: [
           'ember'
         ],
-      }),
-      r({
+      },
+      {
+        no: 41,
         imageUrl: '/images/pokemon_snaps/41.svg',
         name: 'Zubat',
         attack: 45,
@@ -368,8 +395,9 @@ module.exports = {
           'bite',
           'wing attack'
         ],
-      }),
-      r({
+      },
+      {
+        no: 42,
         imageUrl: '/images/pokemon_snaps/42.svg',
         name: 'Golbat',
         attack: 80,
@@ -381,8 +409,9 @@ module.exports = {
           'wing attack',
           'air cutter'
         ],
-      }),
-      r({
+      },
+      {
+        no: 46,
         imageUrl: '/images/pokemon_snaps/46.svg',
         name: 'Paras',
         attack: 70,
@@ -391,8 +420,9 @@ module.exports = {
         moves: [
           'scratch'
         ],
-      }),
-      r({
+      },
+      {
+        no: 47,
         imageUrl: '/images/pokemon_snaps/47.svg',
         name: 'Parasect',
         attack: 95,
@@ -402,8 +432,9 @@ module.exports = {
           'scratch',
           'slash'
         ],
-      }),
-      r({
+      },
+      {
+        no: 48,
         imageUrl: '/images/pokemon_snaps/48.svg',
         name: 'Venonat',
         attack: 55,
@@ -413,8 +444,9 @@ module.exports = {
           'tackle',
           'confusion'
         ],
-      }),
-      r({
+      },
+      {
+        no: 49,
         imageUrl: '/images/pokemon_snaps/49.svg',
         name: 'Venomoth',
         attack: 65,
@@ -426,8 +458,9 @@ module.exports = {
           'confusion',
           'gust'
         ],
-      }),
-      r({
+      },
+      {
+        no: 50,
         imageUrl: '/images/pokemon_snaps/50.svg',
         name: 'Diglett',
         attack: 55,
@@ -436,8 +469,9 @@ module.exports = {
         moves: [
           'scratch'
         ],
-      }),
-      r({
+      },
+      {
+        no: 51,
         imageUrl: '/images/pokemon_snaps/51.svg',
         name: 'Dugtrio',
         attack: 80,
@@ -448,8 +482,9 @@ module.exports = {
           'slash',
           'earthquake'
         ],
-      }),
-      r({
+      },
+      {
+        no: 52,
         imageUrl: '/images/pokemon_snaps/52.svg',
         name: 'Meowth',
         attack: 45,
@@ -459,8 +494,9 @@ module.exports = {
           'scratch',
           'bite'
         ],
-      }),
-      r({
+      },
+      {
+        no: 53,
         imageUrl: '/images/pokemon_snaps/53.svg',
         name: 'Persian',
         attack: 70,
@@ -471,8 +507,9 @@ module.exports = {
           'bite',
           'slash'
         ],
-      }),
-      r({
+      },
+      {
+        no: 54,
         imageUrl: '/images/pokemon_snaps/54.svg',
         name: 'Psyduck',
         attack: 52,
@@ -482,8 +519,9 @@ module.exports = {
           'scratch',
           'confusion'
         ],
-      }),
-      r({
+      },
+      {
+        no: 55,
         imageUrl: '/images/pokemon_snaps/55.svg',
         name: 'Golduck',
         attack: 82,
@@ -494,8 +532,9 @@ module.exports = {
           'confusion',
           'hydro pump'
         ],
-      }),
-      r({
+      },
+      {
+        no: 56,
         imageUrl: '/images/pokemon_snaps/56.svg',
         name: 'Mankey',
         attack: 80,
@@ -506,8 +545,9 @@ module.exports = {
           'low kick',
           'karate chop'
         ],
-      }),
-      r({
+      },
+      {
+        no: 57,
         imageUrl: '/images/pokemon_snaps/57.svg',
         name: 'Primeape',
         attack: 105,
@@ -519,8 +559,9 @@ module.exports = {
           'karate chop',
           'cross chop'
         ],
-      }),
-      r({
+      },
+      {
+        no: 59,
         imageUrl: '/images/pokemon_snaps/59.svg',
         name: 'Arcanine',
         attack: 110,
@@ -530,8 +571,9 @@ module.exports = {
           'bite',
           'ember'
         ],
-      }),
-      r({
+      },
+      {
+        no: 60,
         imageUrl: '/images/pokemon_snaps/60.svg',
         name: 'Poliwag',
         attack: 50,
@@ -541,8 +583,9 @@ module.exports = {
           'bubble',
           'water gun'
         ],
-      }),
-      r({
+      },
+      {
+        no: 62,
         imageUrl: '/images/pokemon_snaps/62.svg',
         name: 'Poliwrath',
         attack: 85,
@@ -551,8 +594,9 @@ module.exports = {
         moves: [
           'water gun'
         ],
-      }),
-      r({
+      },
+      {
+        no: 65,
         imageUrl: '/images/pokemon_snaps/65.svg',
         name: 'Alakazam',
         attack: 50,
@@ -563,8 +607,9 @@ module.exports = {
           'psybeam',
           'psychic'
         ],
-      }),
-      r({
+      },
+      {
+        no: 66,
         imageUrl: '/images/pokemon_snaps/66.svg',
         name: 'Machop',
         attack: 80,
@@ -574,8 +619,9 @@ module.exports = {
           'low kick',
           'karate chop'
         ],
-      }),
-      r({
+      },
+      {
+        no: 68,
         imageUrl: '/images/pokemon_snaps/68.svg',
         name: 'Machamp',
         attack: 130,
@@ -587,8 +633,9 @@ module.exports = {
           'cross chop',
           'dynamicpunch'
         ],
-      }),
-      r({
+      },
+      {
+        no: 69,
         imageUrl: '/images/pokemon_snaps/69.svg',
         name: 'Bellsprout',
         attack: 75,
@@ -597,8 +644,9 @@ module.exports = {
         moves: [
           'vine whip'
         ],
-      }),
-      r({
+      },
+      {
+        no: 71,
         imageUrl: '/images/pokemon_snaps/71.svg',
         name: 'Victreebel',
         attack: 105,
@@ -608,8 +656,9 @@ module.exports = {
           'vine whip',
           'razor leaf'
         ],
-      }),
-      r({
+      },
+      {
+        no: 72,
         imageUrl: '/images/pokemon_snaps/72.svg',
         name: 'Tentacool',
         attack: 40,
@@ -621,8 +670,9 @@ module.exports = {
           'acid',
           'bubblebeam'
         ],
-      }),
-      r({
+      },
+      {
+        no: 73,
         imageUrl: '/images/pokemon_snaps/73.svg',
         name: 'Tentacruel',
         attack: 70,
@@ -634,8 +684,9 @@ module.exports = {
           'acid',
           'bubblebeam'
         ],
-      }),
-      r({
+      },
+      {
+        no: 74,
         imageUrl: '/images/pokemon_snaps/74.svg',
         name: 'Geodude',
         attack: 80,
@@ -645,8 +696,9 @@ module.exports = {
           'tackle',
           'rock throw'
         ],
-      }),
-      r({
+      },
+      {
+        no: 76,
         imageUrl: '/images/pokemon_snaps/76.svg',
         name: 'Golem',
         attack: 110,
@@ -657,8 +709,9 @@ module.exports = {
           'rock throw',
           'earthquake'
         ],
-      }),
-      r({
+      },
+      {
+        no: 77,
         imageUrl: '/images/pokemon_snaps/77.svg',
         name: 'Ponyta',
         attack: 85,
@@ -668,8 +721,9 @@ module.exports = {
           'ember',
           'stomp'
         ],
-      }),
-      r({
+      },
+      {
+        no: 78,
         imageUrl: '/images/pokemon_snaps/78.svg',
         name: 'Rapidash',
         attack: 100,
@@ -680,8 +734,9 @@ module.exports = {
           'stomp',
           'fire blast'
         ],
-      }),
-      r({
+      },
+      {
+        no: 79,
         imageUrl: '/images/pokemon_snaps/79.svg',
         name: 'Slowpoke',
         attack: 65,
@@ -693,8 +748,9 @@ module.exports = {
           'confusion',
           'headbutt'
         ],
-      }),
-      r({
+      },
+      {
+        no: 80,
         imageUrl: '/images/pokemon_snaps/80.svg',
         name: 'Slowbro',
         attack: 75,
@@ -706,8 +762,9 @@ module.exports = {
           'confusion',
           'headbutt'
         ],
-      }),
-      r({
+      },
+      {
+        no: 81,
         imageUrl: '/images/pokemon_snaps/81.svg',
         name: 'Magnemite',
         attack: 35,
@@ -718,8 +775,9 @@ module.exports = {
           'thundershock',
           'spark'
         ],
-      }),
-      r({
+      },
+      {
+        no: 82,
         imageUrl: '/images/pokemon_snaps/82.svg',
         name: 'Magneton',
         attack: 60,
@@ -731,8 +789,9 @@ module.exports = {
           'spark',
           'zap cannon'
         ],
-      }),
-      r({
+      },
+      {
+        no: 83,
         imageUrl: '/images/pokemon_snaps/83.svg',
         name: 'Farfetch\'d',
         attack: 65,
@@ -742,8 +801,9 @@ module.exports = {
           'peck',
           'slash'
         ],
-      }),
-      r({
+      },
+      {
+        no: 84,
         imageUrl: '/images/pokemon_snaps/84.svg',
         name: 'Doduo',
         attack: 85,
@@ -752,8 +812,9 @@ module.exports = {
         moves: [
           'peck'
         ],
-      }),
-      r({
+      },
+      {
+        no: 85,
         imageUrl: '/images/pokemon_snaps/85.svg',
         name: 'Dodrio',
         attack: 110,
@@ -763,8 +824,9 @@ module.exports = {
           'peck',
           'drill peck'
         ],
-      }),
-      r({
+      },
+      {
+        no: 86,
         imageUrl: '/images/pokemon_snaps/86.svg',
         name: 'Seel',
         attack: 45,
@@ -775,8 +837,9 @@ module.exports = {
           'icy wind',
           'aurora beam'
         ],
-      }),
-      r({
+      },
+      {
+        no: 87,
         imageUrl: '/images/pokemon_snaps/87.svg',
         name: 'Dewgong',
         attack: 70,
@@ -788,8 +851,9 @@ module.exports = {
           'icy wind',
           'aurora beam'
         ],
-      }),
-      r({
+      },
+      {
+        no: 88,
         imageUrl: '/images/pokemon_snaps/88.svg',
         name: 'Grimer',
         attack: 80,
@@ -799,8 +863,9 @@ module.exports = {
           'pound',
           'sludge'
         ],
-      }),
-      r({
+      },
+      {
+        no: 89,
         imageUrl: '/images/pokemon_snaps/89.svg',
         name: 'Muk',
         attack: 105,
@@ -811,8 +876,9 @@ module.exports = {
           'sludge',
           'sludge bomb'
         ],
-      }),
-      r({
+      },
+      {
+        no: 91,
         imageUrl: '/images/pokemon_snaps/91.svg',
         name: 'Cloyster',
         attack: 95,
@@ -821,8 +887,9 @@ module.exports = {
         moves: [
           'aurora beam'
         ],
-      }),
-      r({
+      },
+      {
+        no: 92,
         imageUrl: '/images/pokemon_snaps/92.svg',
         name: 'Gastly',
         attack: 35,
@@ -832,8 +899,9 @@ module.exports = {
           'tackle',
           'lick'
         ],
-      }),
-      r({
+      },
+      {
+        no: 94,
         imageUrl: '/images/pokemon_snaps/94.svg',
         name: 'Gengar',
         attack: 65,
@@ -845,8 +913,9 @@ module.exports = {
           'shadow punch',
           'shadow ball'
         ],
-      }),
-      r({
+      },
+      {
+        no: 95,
         imageUrl: '/images/pokemon_snaps/95.svg',
         name: 'Onix',
         attack: 45,
@@ -858,8 +927,9 @@ module.exports = {
           'dragonbreath',
           'slam'
         ],
-      }),
-      r({
+      },
+      {
+        no: 96,
         imageUrl: '/images/pokemon_snaps/96.svg',
         name: 'Drowzee',
         attack: 48,
@@ -870,8 +940,9 @@ module.exports = {
           'confusion',
           'headbutt'
         ],
-      }),
-      r({
+      },
+      {
+        no: 97,
         imageUrl: '/images/pokemon_snaps/97.svg',
         name: 'Hypno',
         attack: 73,
@@ -883,8 +954,9 @@ module.exports = {
           'headbutt',
           'psychic'
         ],
-      }),
-      r({
+      },
+      {
+        no: 98,
         imageUrl: '/images/pokemon_snaps/98.svg',
         name: 'Krabby',
         attack: 105,
@@ -896,8 +968,9 @@ module.exports = {
           'mud shot',
           'stomp'
         ],
-      }),
-      r({
+      },
+      {
+        no: 99,
         imageUrl: '/images/pokemon_snaps/99.svg',
         name: 'Kingler',
         attack: 130,
@@ -909,8 +982,9 @@ module.exports = {
           'vicegrip',
           'mud shot'
         ],
-      }),
-      r({
+      },
+      {
+        no: 100,
         imageUrl: '/images/pokemon_snaps/100.svg',
         name: 'Voltorb',
         attack: 30,
@@ -920,8 +994,9 @@ module.exports = {
           'tackle',
           'spark'
         ],
-      }),
-      r({
+      },
+      {
+        no: 101,
         imageUrl: '/images/pokemon_snaps/101.svg',
         name: 'Electrode',
         attack: 50,
@@ -932,8 +1007,9 @@ module.exports = {
           'spark',
           'swift'
         ],
-      }),
-      r({
+      },
+      {
+        no: 103,
         imageUrl: '/images/pokemon_snaps/103.svg',
         name: 'Exeggutor',
         attack: 95,
@@ -944,8 +1020,9 @@ module.exports = {
           'stomp',
           'egg bomb'
         ],
-      }),
-      r({
+      },
+      {
+        no: 104,
         imageUrl: '/images/pokemon_snaps/104.svg',
         name: 'Cubone',
         attack: 50,
@@ -955,8 +1032,9 @@ module.exports = {
           'bone club',
           'headbutt'
         ],
-      }),
-      r({
+      },
+      {
+        no: 105,
         imageUrl: '/images/pokemon_snaps/105.svg',
         name: 'Marowak',
         attack: 80,
@@ -966,8 +1044,9 @@ module.exports = {
           'bone club',
           'headbutt'
         ],
-      }),
-      r({
+      },
+      {
+        no: 106,
         imageUrl: '/images/pokemon_snaps/106.svg',
         name: 'Hitmonlee',
         attack: 120,
@@ -976,8 +1055,9 @@ module.exports = {
         moves: [
           'rolling kick'
         ],
-      }),
-      r({
+      },
+      {
+        no: 107,
         imageUrl: '/images/pokemon_snaps/107.svg',
         name: 'Hitmonchan',
         attack: 105,
@@ -989,8 +1069,9 @@ module.exports = {
           'fire punch',
           'sky uppercut'
         ],
-      }),
-      r({
+      },
+      {
+        no: 108,
         imageUrl: '/images/pokemon_snaps/108.svg',
         name: 'Lickitung',
         attack: 55,
@@ -1001,8 +1082,9 @@ module.exports = {
           'stomp',
           'slam'
         ],
-      }),
-      r({
+      },
+      {
+        no: 109,
         imageUrl: '/images/pokemon_snaps/109.svg',
         name: 'Koffing',
         attack: 65,
@@ -1013,8 +1095,9 @@ module.exports = {
           'smog',
           'sludge'
         ],
-      }),
-      r({
+      },
+      {
+        no: 110,
         imageUrl: '/images/pokemon_snaps/110.svg',
         name: 'Weezing',
         attack: 90,
@@ -1025,8 +1108,9 @@ module.exports = {
           'smog',
           'sludge'
         ],
-      }),
-      r({
+      },
+      {
+        no: 111,
         imageUrl: '/images/pokemon_snaps/111.svg',
         name: 'Rhyhorn',
         attack: 85,
@@ -1036,8 +1120,9 @@ module.exports = {
           'horn attack',
           'stomp'
         ],
-      }),
-      r({
+      },
+      {
+        no: 112,
         imageUrl: '/images/pokemon_snaps/112.svg',
         name: 'Rhydon',
         attack: 130,
@@ -1049,8 +1134,9 @@ module.exports = {
           'earthquake',
           'megahorn'
         ],
-      }),
-      r({
+      },
+      {
+        no: 113,
         imageUrl: '/images/pokemon_snaps/113.svg',
         name: 'Chansey',
         attack: 5,
@@ -1060,8 +1146,9 @@ module.exports = {
           'pound',
           'egg bomb'
         ],
-      }),
-      r({
+      },
+      {
+        no: 114,
         imageUrl: '/images/pokemon_snaps/114.svg',
         name: 'Tangela',
         attack: 55,
@@ -1072,8 +1159,9 @@ module.exports = {
           'vine whip',
           'slam'
         ],
-      }),
-      r({
+      },
+      {
+        no: 115,
         imageUrl: '/images/pokemon_snaps/115.svg',
         name: 'Kangaskhan',
         attack: 95,
@@ -1084,8 +1172,9 @@ module.exports = {
           'mega punch',
           'dizzy punch'
         ],
-      }),
-      r({
+      },
+      {
+        no: 116,
         imageUrl: '/images/pokemon_snaps/116.svg',
         name: 'Horsea',
         attack: 40,
@@ -1096,8 +1185,9 @@ module.exports = {
           'water gun',
           'twister'
         ],
-      }),
-      r({
+      },
+      {
+        no: 117,
         imageUrl: '/images/pokemon_snaps/117.svg',
         name: 'Seadra',
         attack: 65,
@@ -1109,8 +1199,9 @@ module.exports = {
           'twister',
           'hydro pump'
         ],
-      }),
-      r({
+      },
+      {
+        no: 118,
         imageUrl: '/images/pokemon_snaps/118.svg',
         name: 'Goldeen',
         attack: 67,
@@ -1120,8 +1211,9 @@ module.exports = {
           'peck',
           'horn attack'
         ],
-      }),
-      r({
+      },
+      {
+        no: 119,
         imageUrl: '/images/pokemon_snaps/119.svg',
         name: 'Seaking',
         attack: 92,
@@ -1133,8 +1225,9 @@ module.exports = {
           'waterfall',
           'megahorn'
         ],
-      }),
-      r({
+      },
+      {
+        no: 121,
         imageUrl: '/images/pokemon_snaps/121.svg',
         name: 'Starmie',
         attack: 75,
@@ -1144,8 +1237,9 @@ module.exports = {
           'water gun',
           'swift'
         ],
-      }),
-      r({
+      },
+      {
+        no: 122,
         imageUrl: '/images/pokemon_snaps/122.svg',
         name: 'Mr. mime',
         attack: 45,
@@ -1157,8 +1251,9 @@ module.exports = {
           'psybeam',
           'psychic'
         ],
-      }),
-      r({
+      },
+      {
+        no: 123,
         imageUrl: '/images/pokemon_snaps/123.svg',
         name: 'Scyther',
         attack: 110,
@@ -1168,8 +1263,9 @@ module.exports = {
           'wing attack',
           'slash'
         ],
-      }),
-      r({
+      },
+      {
+        no: 124,
         imageUrl: '/images/pokemon_snaps/124.svg',
         name: 'Jynx',
         attack: 50,
@@ -1181,8 +1277,9 @@ module.exports = {
           'powder snow',
           'ice punch'
         ],
-      }),
-      r({
+      },
+      {
+        no: 125,
         imageUrl: '/images/pokemon_snaps/125.svg',
         name: 'Electabuzz',
         attack: 83,
@@ -1194,8 +1291,9 @@ module.exports = {
           'thunderbolt',
           'thunder'
         ],
-      }),
-      r({
+      },
+      {
+        no: 126,
         imageUrl: '/images/pokemon_snaps/126.svg',
         name: 'Magmar',
         attack: 95,
@@ -1207,8 +1305,9 @@ module.exports = {
           'fire punch',
           'flamethrower'
         ],
-      }),
-      r({
+      },
+      {
+        no: 127,
         imageUrl: '/images/pokemon_snaps/127.svg',
         name: 'Pinsir',
         attack: 125,
@@ -1217,8 +1316,9 @@ module.exports = {
         moves: [
           'vicegrip'
         ],
-      }),
-      r({
+      },
+      {
+        no: 128,
         imageUrl: '/images/pokemon_snaps/128.svg',
         name: 'Tauros',
         attack: 100,
@@ -1228,8 +1328,9 @@ module.exports = {
           'tackle',
           'horn attack'
         ],
-      }),
-      r({
+      },
+      {
+        no: 129,
         imageUrl: '/images/pokemon_snaps/129.svg',
         name: 'Magikarp',
         attack: 10,
@@ -1238,8 +1339,9 @@ module.exports = {
         moves: [
           'tackle'
         ],
-      }),
-      r({
+      },
+      {
+        no: 130,
         imageUrl: '/images/pokemon_snaps/130.svg',
         name: 'Gyarados',
         attack: 125,
@@ -1250,8 +1352,9 @@ module.exports = {
           'twister',
           'hydro pump'
         ],
-      }),
-      r({
+      },
+      {
+        no: 131,
         imageUrl: '/images/pokemon_snaps/131.svg',
         name: 'Lapras',
         attack: 85,
@@ -1263,8 +1366,9 @@ module.exports = {
           'ice beam',
           'hydro pump'
         ],
-      }),
-      r({
+      },
+      {
+        no: 133,
         imageUrl: '/images/pokemon_snaps/133.svg',
         name: 'Eevee',
         attack: 55,
@@ -1274,8 +1378,9 @@ module.exports = {
           'tackle',
           'bite'
         ],
-      }),
-      r({
+      },
+      {
+        no: 135,
         imageUrl: '/images/pokemon_snaps/135.svg',
         name: 'Jolteon',
         attack: 65,
@@ -1286,8 +1391,9 @@ module.exports = {
           'thundershock',
           'thunder'
         ],
-      }),
-      r({
+      },
+      {
+        no: 136,
         imageUrl: '/images/pokemon_snaps/136.svg',
         name: 'Flareon',
         attack: 130,
@@ -1299,8 +1405,9 @@ module.exports = {
           'bite',
           'smog'
         ],
-      }),
-      r({
+      },
+      {
+        no: 137,
         imageUrl: '/images/pokemon_snaps/137.svg',
         name: 'Porygon',
         attack: 60,
@@ -1311,8 +1418,9 @@ module.exports = {
           'psybeam',
           'zap cannon'
         ],
-      }),
-      r({
+      },
+      {
+        no: 138,
         imageUrl: '/images/pokemon_snaps/138.svg',
         name: 'Omanyte',
         attack: 40,
@@ -1324,8 +1432,9 @@ module.exports = {
           'water gun',
           'mud shot'
         ],
-      }),
-      r({
+      },
+      {
+        no: 139,
         imageUrl: '/images/pokemon_snaps/139.svg',
         name: 'Omastar',
         attack: 60,
@@ -1337,8 +1446,9 @@ module.exports = {
           'water gun',
           'mud shot'
         ],
-      }),
-      r({
+      },
+      {
+        no: 140,
         imageUrl: '/images/pokemon_snaps/140.svg',
         name: 'Kabuto',
         attack: 80,
@@ -1348,8 +1458,9 @@ module.exports = {
           'scratch',
           'mud shot'
         ],
-      }),
-      r({
+      },
+      {
+        no: 141,
         imageUrl: '/images/pokemon_snaps/141.svg',
         name: 'Kabutops',
         attack: 115,
@@ -1361,8 +1472,9 @@ module.exports = {
           'slash',
           'ancientpower'
         ],
-      }),
-      r({
+      },
+      {
+        no: 142,
         imageUrl: '/images/pokemon_snaps/142.svg',
         name: 'Aerodactyl',
         attack: 105,
@@ -1373,8 +1485,9 @@ module.exports = {
           'bite',
           'ancientpower'
         ],
-      }),
-      r({
+      },
+      {
+        no: 143,
         imageUrl: '/images/pokemon_snaps/143.svg',
         name: 'Snorlax',
         attack: 110,
@@ -1386,8 +1499,9 @@ module.exports = {
           'snore',
           'body slam'
         ],
-      }),
-      r({
+      },
+      {
+        no: 144,
         imageUrl: '/images/pokemon_snaps/144.svg',
         name: 'Articuno',
         attack: 85,
@@ -1399,8 +1513,9 @@ module.exports = {
           'ice beam',
           'blizzard'
         ],
-      }),
-      r({
+      },
+      {
+        no: 145,
         imageUrl: '/images/pokemon_snaps/145.svg',
         name: 'Zapdos',
         attack: 90,
@@ -1412,8 +1527,9 @@ module.exports = {
           'drill peck',
           'thunder'
         ],
-      }),
-      r({
+      },
+      {
+        no: 146,
         imageUrl: '/images/pokemon_snaps/146.svg',
         name: 'Moltres',
         attack: 100,
@@ -1425,8 +1541,9 @@ module.exports = {
           'flamethrower',
           'heat wave'
         ],
-      }),
-      r({
+      },
+      {
+        no: 147,
         imageUrl: '/images/pokemon_snaps/147.svg',
         name: 'Dratini',
         attack: 64,
@@ -1436,8 +1553,9 @@ module.exports = {
           'twister',
           'slam'
         ],
-      }),
-      r({
+      },
+      {
+        no: 148,
         imageUrl: '/images/pokemon_snaps/148.svg',
         name: 'Dragonair',
         attack: 84,
@@ -1447,8 +1565,9 @@ module.exports = {
           'twister',
           'slam'
         ],
-      }),
-      r({
+      },
+      {
+        no: 149,
         imageUrl: '/images/pokemon_snaps/149.svg',
         name: 'Dragonite',
         attack: 134,
@@ -1459,8 +1578,9 @@ module.exports = {
           'slam',
           'wing attack'
         ],
-      }),
-      r({
+      },
+      {
+        no: 150,
         imageUrl: '/images/pokemon_snaps/150.svg',
         name: 'Mewtwo',
         attack: 110,
@@ -1471,8 +1591,9 @@ module.exports = {
           'swift',
           'psychic'
         ],
-      }),
-      r({
+      },
+      {
+        no: 151,
         imageUrl: '/images/pokemon_snaps/151.svg',
         name: 'Mew',
         attack: 100,
@@ -1484,11 +1605,11 @@ module.exports = {
           'psychic',
           'ancientpower'
         ],
-      }),
+      },
     ]);
   },
 
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('Pokemons');
+  down: async (queryInterface, Sequelize) => {
+    return await queryInterface.bulkDelete('Pokemons');
   }
 };

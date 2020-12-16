@@ -1,15 +1,20 @@
 'use strict';
 
-const { types } = require('../models/pokemonTypes');
+const { types } = require("../models/pokemonType");
 
 module.exports = {
-  up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Pokemons', {
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.createTable('Pokemons', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
+      },
+      no: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        unique: true,
       },
       attack: {
         allowNull: false,
@@ -36,27 +41,34 @@ module.exports = {
         allowNull: false,
         type: Sequelize.ARRAY(Sequelize.STRING(30)),
       },
-      playerId: {
-        allowNull: false,
-        references: {
-          model: {
-            tableName: 'Players',
-          },
-        },
-        type: Sequelize.INTEGER
-      },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn("now"),
+      },
+      encounterRate: {
+        allowNull: false,
+        type: Sequelize.DECIMAL(3, 2),
+        defaultValue: 1.00,
+      },
+      catchRate: {
+        allowNull: false,
+        type: Sequelize.DECIMAL(3, 2),
+        defaultValue: 1.00,
+      },
+      captured: {
+        allowNull: false,
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn("now"),
       }
     });
   },
-
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Pokemons');
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.dropTable('Pokemons');
   }
 };

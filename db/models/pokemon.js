@@ -1,9 +1,28 @@
 'use strict';
 
-const { types } = require('./pokemonTypes');
+const { Model } = require('sequelize');
+const { types } = require("./pokemonType");
+
+const UNKNOWN_IMG_URL = "/images/unknown.png";
 
 module.exports = (sequelize, DataTypes) => {
-  const Pokemon = sequelize.define('Pokemon', {
+  class Pokemon extends Model {
+    static associate(models) {
+      Pokemon.hasMany(models.Item, { foreignKey: "pokemonId", as: "items" });
+      Pokemon.addScope("withItems", {
+        include: [{ model: models.Item, as: "items" }],
+      });
+    }
+  };
+  Pokemon.init({
+    no: {
+      allowNull: false,
+      type: DataTypes.INTEGER,
+      unique: true,
+      validate: {
+        min: 1,
+      }
+    },
     attack: {
       allowNull: false,
       type: DataTypes.INTEGER,
@@ -23,16 +42,18 @@ module.exports = (sequelize, DataTypes) => {
     imageUrl: {
       allowNull: false,
       type: DataTypes.STRING,
-      validates: {
-        isUrl: true,
-        len: [10, 255],
+      get() {
+        const captured = this.getDataValue("captured");
+        if (captured) return this.getDataValue("imageUrl");
+        return UNKNOWN_IMG_URL;
       }
     },
     name: {
       allowNull: false,
+      unique: true,
       type: DataTypes.STRING,
-      validates: {
-        len: [10, 255],
+      validate: {
+        len: [3, 255],
       }
     },
     type: {
@@ -44,14 +65,65 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.ARRAY(DataTypes.STRING(30)),
     },
-    playerId: {
-      allowNull: false,
-      type: DataTypes.INTEGER,
+    encounterRate: {
+      type: DataTypes.DECIMAL(3, 2),
+      validate: {
+        min: 0,
+        max: 100,
+      }
     },
-  }, {});
-  Pokemon.associate = function(models) {
-    Pokemon.belongsTo(models.Player, { foreignKey: 'playerId', as: 'player' });
-    Pokemon.hasMany(models.Item, { foreignKey: 'pokemonId', as: 'items' });
-  };
+    catchRate: {
+      type: DataTypes.DECIMAL(3, 2),
+      validate: {
+        min: 0,
+        max: 100,
+      }
+    },
+    captured: {
+      type: DataTypes.BOOLEAN,
+    },
+  }, {
+    sequelize,
+    modelName: 'Pokemon',
+    defaultScope: {
+      attributes: {
+        exclude: [
+          "attack",
+          "defense",
+          "type",
+          "moves",
+          "encounterRate",
+          "catchRate",
+          "createdAt",
+          "updatedAt"
+        ],
+      }
+    },
+    scopes: {
+      random: {
+        attributes: {
+          include: ["encounterRate"]
+        }
+      },
+      detailed: {
+        attributes: {
+          exclude: [
+            "encounterRate",
+            "catchRate",
+          ],
+        },
+      },
+      ally: {
+        where: {
+          captured: true 
+        }
+      },
+      opponent: {
+        where: {
+          captured: false
+        }
+      }
+    }
+  });
   return Pokemon;
 };

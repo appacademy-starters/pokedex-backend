@@ -1,5 +1,5 @@
-const { commerce } = require('faker');
-const { Pokemon } = require('./models');
+const { commerce } = require("faker");
+const { Pokemon } = require("./models");
 
 function random100() {
   return Math.floor(Math.random() * 100) + 1;
@@ -7,10 +7,10 @@ function random100() {
 
 function randomImage() {
   const images = [
-    '/images/pokemon_berry.svg',
-    '/images/pokemon_egg.svg',
-    '/images/pokemon_potion.svg',
-    '/images/pokemon_super_potion.svg',
+    "/images/pokemon_berry.svg",
+    "/images/pokemon_egg.svg",
+    "/images/pokemon_potion.svg",
+    "/images/pokemon_super_potion.svg",
   ];
   const index = Math.floor(Math.random() * images.length);
   return images[index];
@@ -27,49 +27,77 @@ function* generateItems() {
   }
 }
 
-async function create(details, owner) {
-  details.playerId = owner.id;
+async function create(details) {
   details.items = [...generateItems()];
-  const pokemon = await Pokemon.create(details, { include: [ 'items' ] });
+  const pokemon = await Pokemon.create(details, { include: ["items"] });
   return pokemon.id;
 }
 
+async function update(details) {
+  const id = details.id;
+  delete details.id;
+  await Pokemon.update(
+    details,
+    {
+      where: { id },
+      returning: true,
+      plain: true,
+    }
+  );
+  return id;
+}
+
 async function list() {
-  return await Pokemon.findAll({
-    attributes: [ 'imageUrl', 'name', 'updatedAt', 'id' ],
-  });
+  return await Pokemon.findAll();
 }
 
 async function one(id) {
-  const pokemon = await Pokemon.findByPk(id, {
-    include: [ 'items', 'player' ]
-  });
+  return await Pokemon.scope("detailed").findByPk(id);
+}
 
-  return {
-    attack: pokemon.attack,
-    defense: pokemon.defense,
-    id: pokemon.id,
-    imageUrl: pokemon.imageUrl,
-    name: pokemon.name,
-    type: pokemon.type,
-    moves: [...pokemon.moves],
-    items: pokemon.items.map(item => {
-      return {
-        name: item.name,
-        price: item.price,
-        happiness: item.happiness,
-        imageUrl: item.imageUrl,
-      };
-    }),
-    owner: {
-      id: pokemon.player.id,
-      name: pokemon.player.name,
-    },
-  };
+async function random() {
+  const pokemon = await Pokemon.scope(["random", "opponent"]).findAll();
+  const weightedSum = pokemon.reduce((sum, { encounterRate }) => {
+    return sum + Number(encounterRate)
+  }, 0);
+  let randomSum = Math.random() * weightedSum;
+  let chosenId;
+  for (let i = 0; i < pokemon.length; i++) {
+    if (randomSum < pokemon[i].encounterRate) {
+      chosenId = i;
+      break;
+    }
+    randomSum -= pokemon[i].encounterRate;
+  }
+  return await Pokemon.findByPk(chosenId);
+}
+
+async function battle(allyId, opponentId) {
+  const ally = await Pokemon.scope("ally").findByPk(allyId);
+  const opponent = await Pokemon.scope("opponent").findByPk(opponentId);
+  if (!ally) throw new Error('Ally Pokemon not found');
+  if (!opponent) throw new Error('Opponent Pokemon not found');
+
+  const minCaptureRate = 30;
+  let attackDiff = ally.attack - opponent.defense;
+  if (attackDiff < minCaptureRate) attackDiff = minCaptureRate;
+
+  const randomNum = Math.random() * 100;
+
+  if (randomNum <= attackDiff) {
+    opponent.captured = true;
+    await opponent.save();
+    return await Pokemon.findByPk(opponent.id);
+  }
+
+  return await Pokemon.findByPk(opponent.id);
 }
 
 module.exports = {
   create,
+  update,
   list,
   one,
+  random,
+  battle,
 };

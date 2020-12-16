@@ -1,50 +1,74 @@
 const express = require('express');
 const asyncHandler = require('express-async-handler');
 const { check, validationResult } = require('express-validator');
-const { types } = require('../../db/models/pokemonTypes');
+const { types } = require('../../db/models/pokemonType');
 
-const { authenticated } = require('./security-utils');
 const PokemonRepository = require('../../db/pokemon-repository');
+const ItemsRepository = require('../../db/items-repository');
+
+const pokemonValidations = require('../../validations/pokemon');
+const itemValidations = require('../../validations/items');
 
 const router = express.Router();
 
-const attack = check('attack').notEmpty().isInt({ min: 0, max: 100 }).toInt();
-const defense = check('defense').notEmpty().isInt({ min: 0, max: 100 }).toInt();
-const imageUrl = check('imageUrl').notEmpty().isURL({ require_protocol: false, require_host: false });
-const name = check('name').notEmpty();
-const type = check('type').notEmpty().isIn(types);
-const moves = check('moves').isArray();
-
-router.get('/', authenticated, asyncHandler(async function(_req, res) {
+router.get('/', asyncHandler(async function(_req, res) {
   const pokemon = await PokemonRepository.list();
-  res.json(pokemon);
+  return res.json(pokemon);
 }));
 
-router.post('/', [
-  ...authenticated,
-  attack,
-  defense,
-  imageUrl,
-  name,
-  type,
-  moves,
-], asyncHandler(async function (req, res, next) {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return next({ status: 422, errors: errors.array() });
-  }
+router.post(
+  '/',
+  pokemonValidations.validateCreate,
+  asyncHandler(async function (req, res) {
+    const id = await PokemonRepository.create(req.body);
+    return res.redirect(`${req.baseUrl}/${id}`);
+  })
+);
 
-  const id = await PokemonRepository.create(req.body, req.player);
-  return res.redirect(`${req.baseUrl}/${id}`);
+router.put(
+  '/:id',
+  pokemonValidations.validateUpdate,
+  asyncHandler(async function (req, res) {
+    const id = await PokemonRepository.update(req.body);
+    const pokemon = await PokemonRepository.one(id);
+    return res.json(pokemon);
+  })
+);
+
+router.get('/types', asyncHandler(async function (_req, res) {
+  return res.json(types);
 }));
 
-router.get('/types', authenticated, asyncHandler(async function (_req, res) {
-  res.json(types);
+router.get('/random', asyncHandler(async function(_req, res){
+  const pokemon = await PokemonRepository.random();
+  return res.json(pokemon);
 }));
 
-router.get('/:id', authenticated, asyncHandler(async function(req, res) {
+router.get('/battle', asyncHandler(async function(req, res){
+  const pokemon = await PokemonRepository.battle(
+    req.query.allyId,
+    req.query.opponentId
+  );
+  return res.json(pokemon);
+}));
+
+router.get('/:id', asyncHandler(async function(req, res) {
   const pokemon = await PokemonRepository.one(req.params.id);
-  res.json(pokemon);
+  return res.json(pokemon);
 }));
+
+router.get('/:id/items', asyncHandler(async function(req, res) {
+  const items = await ItemsRepository.itemsByPokemonId(req.params.id);
+  return res.json(items);
+}));
+
+router.post(
+  '/:id/items',
+  itemValidations.validateCreate,
+  asyncHandler(async function(req, res) {
+    const item = await ItemsRepository.addItem(req.body, req.params.id);
+    return res.json(item);
+  })
+);
 
 module.exports = router;

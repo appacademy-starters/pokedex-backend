@@ -1,9 +1,9 @@
 const router = require('express').Router();
 
-const routes = ['players', 'session', 'pokemon'];
+const pokemonRouter = require("./pokemon.js");
+router.use("/pokemon", pokemonRouter);
 
-for (let route of routes) {
-  router.use(`/${route}`, require(`./${route}`));
-}
+const itemsRouter = require("./items.js");
+router.use("/items", itemsRouter);
 
 module.exports = router;
