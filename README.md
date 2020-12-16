@@ -16,97 +16,11 @@ This is the backend for the Pokedex exercises.
    * `npm run db:seed:all`
    * `npm start`
 
-## The security API
-
-Your application will need to login a player or sign the player up. Here are the
-two methods for doing that.
-
-### Login: POST /api/session
-
-There are three existing players in the database after seeding, all with the
-password "password":
-
-| Email              | Name        |
-|--------------------|-------------|
-| demo@example.com   | Demo-lition |
-| yusuke@example.com | Yusuke      |
-| petra@example.com  | Peta        |
-
-Expected payload sent to server:
-
-```json
-{
-  "email": "email@example.com",
-  "password": "password"
-}
-```
-
-Successful response:
-
-```json
-{
-  "token": "the token to use in your follow-up requests",
-  "player": {
-    "createdAt": "2019-05-01T08:33:40.799Z",
-    "email": "yusuke@example.com",
-    "id": 2,
-    "name": "Yusuke",
-    "updatedAt": "2019-05-01T08:33:40.799Z",
-  }
-}
-```
-
-### Sign-up: POST /api/players
-
-Expected payload sent to server:
-
-```json
-{
-  "name": "Marco",
-  "password": "pwd",
-  "email": "marco@example.com"
-}
-```
-
-Successful response:
-
-```json
-{
-  "token": "the token to use in your follow-up requests",
-  "player": {
-    "createdAt": "2019-05-01T08:33:40.799Z",
-    "email": "marco@example.com",
-    "id": 4,
-    "name": "Marco",
-    "updatedAt": "2019-05-01T08:33:40.799Z",
-  }
-}
-```
-
-### Logout: DELETE /api/session
-
-You need to include the token received from logging in or signing up in this
-call as a _Bearer_ token for the _Authorization_ header. Set that on the
-header of the `fetch` call for this endpoint.
-
-```js
-// Example code snippet
-fetch(url, { headers: { Authorization: `Bearer ${token}` }})
-```
-
-Successful response:
-
-```json
-{
-  "message": "success"
-}
-```
-
 ## Images
 
 Some of the API results have image URLs associated with them. You can get them
 from this service. For example, if the service is hosted at
-`http://localhost:8000`, then `http://localhost:8000/images/pokemon_snaps/5.svg`
+`http://localhost:5000`, then `http://localhost:5000/images/pokemon_snaps/5.svg`
 will show the image for the Pokemon with the image URL
 `/images/pokemon_snaps/5.svg`.
 
@@ -115,15 +29,6 @@ will show the image for the Pokemon with the image URL
 This is all about listing and creating Pokemon.
 
 ### List Pokemon types: GET /api/pokemon/types
-
-You need to include the token received from logging in or signing up in this
-call as a _Bearer_ token for the _Authorization_ header. Set that on the
-header of the `fetch` call for this endpoint.
-
-```js
-// Example code snippet
-fetch(url, { headers: { Authorization: `Bearer ${token}` }})
-```
 
 Successful response:
 
@@ -150,122 +55,176 @@ Successful response:
 
 ### List Pokemon: GET /api/pokemon
 
-You need to include the token received from logging in or signing up in this
-call as a _Bearer_ token for the _Authorization_ header. Set that on the
-header of the `fetch` call for this endpoint.
-
-```js
-// Example code snippet
-fetch(url, { headers: { Authorization: `Bearer ${token}` }})
-```
+This route returns an array of Pokemon. Those that have been captured will
+have their image returned. Otherwise a question mark image will be sent for the
+ones that are not captured. The information on each Pokemon is not detailed.
 
 Successful response looks like this with more entries:
 
 ```json
 [
   {
-    "imageUrl": "/images/pokemon_snaps/1.svg",
+    "id": 1,
+    "no": 1,
     "name": "Bulbasaur",
-    "updatedAt": "2019-05-01T08:33:40.799Z"
-  }
+    "imageUrl": "/images/pokemon_snaps/1.svg",
+    "captured": true
+  },
+  // ...
 ]
 ```
 
 ### Pokemon details: GET /api/pokemon/:id
 
-You need to include the token received from logging in or signing up in this
-call as a _Bearer_ token for the _Authorization_ header. Set that on the
-header of the `fetch` call for this endpoint.
-
-```js
-// Example code snippet
-fetch(url, { headers: { Authorization: `Bearer ${token}` }})
-```
+This route returns detailed information about the Pokemon with the matching id
+in the route parameters.
 
 Successful response looks like this for the given id:
 
 ```json
 {
-  "attack": 90,
-  "defense": 55,
-  "imageUrl": "/images/pokemon_snaps/26.svg",
-  "name": "Raichu5",
-  "type": "electric",
+  "imageUrl": "/images/pokemon_snaps/1.svg",
+  "id": 1,
+  "no": 1,
+  "attack": 49,
+  "defense": 49,
+  "name": "Bulbasaur",
+  "type": "grass",
   "moves": [
-    "thundershock",
-    "thunderbolt"
+    "tackle",
+    "vine whip"
   ],
-  "items": [],
-  "owner": {
-    "id": 2,
-    "name": "Yusuke"
-  }
+  "captured": true,
+  "createdAt": "2020-12-16T01:17:24.119Z",
+  "updatedAt": "2020-12-16T01:17:24.119Z"
 }
 ```
 
 ### Create a new Pokemon: POST /api/pokemon
 
-You need to include the token received from logging in or signing up in this
-call as a _Bearer_ token for the _Authorization_ header. Set that on the
-header of the `fetch` call for this endpoint.
+This route accepts information to create a Pokemon.
 
-```js
-// Example code snippet
-fetch(url, { headers: { Authorization: `Bearer ${token}` }})
+The payload that you must send looks like this:
+
+```json
+{
+  "no": 11,
+  "attack": 25,
+  "defense": 55,
+  "imageUrl": "/images/pokemon_snaps/11.svg",
+  "name": "Metapod",
+  "type": "bug",
+  "moves": [
+    "Tackle",
+    "Harden"
+  ]
+}
 ```
+
+Successful response is the newly created Pokemon returned and looks like this:
+
+```json
+{
+  "id": 150,
+  "no": 11,
+  "attack": 25,
+  "defense": 55,
+  "imageUrl": "/images/pokemon_snaps/11.svg",
+  "name": "Metapod",
+  "type": "bug",
+  "moves": [
+    "Tackle",
+    "Harden"
+  ]
+}
+```
+
+### Update a Pokemon: PUT /api/pokemon/:id
+
+This route updates a Pokemon with the matching id in the route parameters.
 
 The payload that you must send looks like this.
 
 ```json
 {
-  "attack": 90,
+  "id": 150,
+  "no": 11,
+  "attack": 25,
   "defense": 55,
-  "imageUrl": "/images/pokemon_snaps/26.svg",
-  "name": "Billy goat gruff",
-  "type": "food",
+  "imageUrl": "/images/pokemon_snaps/11.svg",
+  "name": "Metapod",
+  "type": "bug",
   "moves": [
-    "eating trash",
-    "eating anything"
+    "Tackle",
+    "Harden"
   ]
 }
 ```
 
-Successful response looks like this:
+Successful response is the updated Pokemon returned and looks like this:
 
 ```json
 {
-  "attack": 90,
+  "id": 150,
+  "no": 11,
+  "attack": 25,
   "defense": 55,
-  "imageUrl": "/images/pokemon_snaps/26.svg",
-  "name": "Billy goat gruff",
-  "type": "food",
+  "imageUrl": "/images/pokemon_snaps/11.svg",
+  "name": "Metapod",
+  "type": "bug",
   "moves": [
-    "eating trash",
-    "eating anything"
-  ],
-  "items": [
-    {
-      "name": "Ergonomic Cotton Keyboard",
-      "price": 37,
-      "happiness": 36,
-      "imageUrl": "/images/pokemon_berry.svg"
-    },
-    {
-      "name": "Tasty Concrete Pants",
-      "price": 79,
-      "happiness": 74,
-      "imageUrl": "/images/pokemon_egg.svg"
-    },
-    {
-      "name": "Fantastic Metal Bacon",
-      "price": 80,
-      "happiness": 61,
-      "imageUrl": "/images/pokemon_super_potion.svg"
-    }
-  ],
-  "owner": {
-    "id": 2,
-    "name": "Yusuke"
-  }
+    "Tackle",
+    "Harden"
+  ]
+}
+```
+
+### Get a Pokemon's Items: GET /api/pokemon/:id/items
+
+This route returns all the items as an array for the Pokemon matching the id in
+the route parameter.
+
+Successful response looks like this:
+
+```json
+[
+  {
+    "id": 1,
+    "happiness": 86,
+    "imageUrl": "/images/pokemon_potion.svg",
+    "name": "Awesome Plastic Pizza",
+    "price": 27,
+    "pokemonId": 1
+  },
+  // ...
+]
+```
+
+### Edit an Item: PUT /api/items/:id
+
+This route updates the item matching the id in the route parameter.
+
+The payload that you must send looks like this.
+
+```json
+{
+  "id": 1,
+  "happiness": 86,
+  "imageUrl": "/images/pokemon_potion.svg",
+  "name": "Awesome Plastic Pizza",
+  "price": 27,
+  "pokemonId": 1
+}
+```
+
+Successful response is the updated item returned and looks like this:
+
+```json
+{
+  "id": 1,
+  "happiness": 86,
+  "imageUrl": "/images/pokemon_potion.svg",
+  "name": "Awesome Plastic Pizza",
+  "price": 27,
 }
 ```
